@@ -36,41 +36,63 @@
             background-color: #52ab98;
             color: white;
         }
+
         .table-container {
             display: flex;
-            justify-content: left;
+            justify-content: center;
             align-items: center;
             margin-top: 20px;
             width: 100%;
             overflow-x: auto;
         }
+
         .table-wrapper {
             max-width: 90vw;
             overflow-x: auto;
-            background: #c8d8e4;
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
         }
-        table {
 
-            width: 100px;
-            border-collapse: collapse;
+        /* Default Table Style (Encryption) */
+        .table-wrapper.encrypt {
             background: #c8d8e4;
         }
-        table, th, td {
-            border: 1px solid #2b6777;
+
+        /* Decryption Table Style */
+        .table-wrapper.decrypt {
+            background: #b9d4cf;
         }
-        th, td {
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: transparent;
+            table-layout: auto;
+        }
+
+        table th, table td {
+            border: 1px solid #2b6777;
             padding: 10px;
             text-align: left;
             white-space: normal;
-            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            color: black; /* Set text color to black for table rows */
         }
+
         th {
-            background-color: #2b6777;
-            color: white;
+            background-color: #4590a5;
+            
+            border-right: 2px solid white; /* Add line to separate header columns */
         }
+
+        .table-wrapper.decrypt th {
+            background-color: #5da393;
+            
+        }
+
     </style>
     <script>
         let processedJson = null;
@@ -89,7 +111,7 @@
             }
 
             if (processedJson) {
-                processJson(action, processedJson);
+                displayTable(processedJson, action);
                 return;
             }
 
@@ -104,7 +126,7 @@
             .then(data => {
                 if (data.processed_data && data.processed_data.result) {
                     processedJson = data.processed_data.result;
-                    displayTable(processedJson);
+                    displayTable(processedJson, action);
                 } else {
                     document.getElementById("output").innerHTML = "<p style='color: red;'>Error processing file.</p>";
                 }
@@ -112,25 +134,7 @@
             .catch(error => console.error("Error:", error));
         }
 
-        function processJson(action, jsonData) {
-            fetch("/encryption/upload/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: action, data: jsonData })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.processed_data && data.processed_data.result) {
-                    processedJson = data.processed_data.result;
-                    displayTable(processedJson);
-                } else {
-                    document.getElementById("output").innerHTML = "<p style='color: red;'>Error processing data.</p>";
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        }
-
-        function displayTable(jsonData) {
+        function displayTable(jsonData, action = 'encrypt') {
             let outputDiv = document.getElementById("output");
             outputDiv.innerHTML = "";
             
@@ -140,7 +144,7 @@
             }
             
             let tableWrapper = document.createElement("div");
-            tableWrapper.className = "table-wrapper";
+            tableWrapper.className = `table-wrapper ${action}`;
 
             let tableContainer = document.createElement("div");
             tableContainer.className = "table-container";
