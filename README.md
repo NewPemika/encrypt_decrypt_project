@@ -21,7 +21,7 @@ This project is a web-based application that allows users to upload Excel files 
 
 ---
 
-## 🚀 Setup Instructions
+##  Setup Instructions
 
 ### **Prerequisites**
 - Python 3.13.1
@@ -37,7 +37,7 @@ This project is a web-based application that allows users to upload Excel files 
    ```
 
 2. **Navigate to the Project Directory**
-   ⚠️ **Important:** If you downloaded the project manually, it might have an **extra folder inside** with the same name.  
+   **Important:** If you downloaded the project manually, it might have an **extra folder inside** with the same name.  
 
    After extraction or cloning, check your folder structure:
    ```
@@ -94,7 +94,7 @@ This project is a web-based application that allows users to upload Excel files 
 
 ## 🛠 **Troubleshooting**
 
-### **❌ Error: No such file or directory for `manage.py`**
+### ** Error: No such file or directory for `manage.py`**
 #### **Issue:**
 If you see this error:
 ```
@@ -111,7 +111,7 @@ Then try running:
 python manage.py runserver
 ```
 
-### **❌ Error: Django Not Found**
+### ** Error: Django Not Found**
 If you see:
 ```
 ModuleNotFoundError: No module named 'django'
